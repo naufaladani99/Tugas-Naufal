@@ -5,10 +5,11 @@ import { Countries } from '../entities/Countries';
 import { MulterModule } from '@nestjs/platform-express';
 import { RegControll } from './Controller/reg.con';
 import { ConfigMulter } from './Middleware/multer.conf';
+import { Users } from '../entities/Users';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Regions, Countries]),
+    TypeOrmModule.forFeature([Regions, Countries, Users]),
     MulterModule.register(ConfigMulter.UploadFiles()),
   ],
   providers: [],

@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -35,7 +36,9 @@ export class RegControll {
   @Get(':id')
   public async GetOne(@Param('id') id: number) {
     try {
-      const region = await this.RegRepo.findOne({ where: { regionId: id } });
+      const region = await this.RegRepo.findOne({
+        where: { regionId: id },
+      });
       return region;
     } catch (error) {
       return error.message;
