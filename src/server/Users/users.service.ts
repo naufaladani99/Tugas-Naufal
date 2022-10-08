@@ -12,4 +12,11 @@ export class UsersService {
   async findOne(username: string) {
     return this.UserRepo.findOne({ where: { userName: username } });
   }
+  async signup(username, hashpassword, email) {
+    return await this.UserRepo.save({
+      userName: username,
+      userPassword: hashpassword,
+      userEmail: email,
+    });
+  }
 }
