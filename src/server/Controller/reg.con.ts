@@ -3,90 +3,45 @@ import {
   Controller,
   Delete,
   Get,
-  Injectable,
   Param,
   Post,
   Put,
-  Req,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Regions } from '../../entities/Regions';
-import { Repository } from 'typeorm';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-
-@Controller('api/region/')
-@Injectable()
+import { TasksService } from './../Services/reg.srv';
+@Controller('api/region')
 export class RegControll {
-  constructor(
-    @InjectRepository(Regions) private RegRepo: Repository<Regions>,
-  ) {}
-
+  constructor(private taskService: TasksService) {}
   @Get()
-  public async GetAll() {
-    try {
-      const region = await this.RegRepo.find();
-      return region;
-    } catch (error) {
-      return error.message;
-    }
+  public async getAll() {
+    return await this.taskService.findAll();
   }
 
   @Get(':id')
-  public async GetOne(@Param('id') id: number) {
-    try {
-      const region = await this.RegRepo.findOne({
-        where: { regionId: id },
-      });
-      return region;
-    } catch (error) {
-      return error.message;
-    }
+  public async getOne(@Param('id') id: number) {
+    return await this.taskService.findOne(id);
   }
+
   @Post()
   @UseInterceptors(FileFieldsInterceptor([{ name: 'foto' }, { name: 'file' }]))
-  public async Create(@UploadedFiles() file: any, @Body() fields: any) {
-    try {
-      if (file) {
-        const region = await this.RegRepo.save({
-          regionName: fields.regionName,
-          regionPhoto: file.file ? file.file[0].originalname : null,
-          regionFile: file.foto ? file.foto[0].originalname : null,
-        });
-        return region;
-      }
-    } catch (error) {
-      return error.message;
-    }
+  public async create(@UploadedFiles() file: any, @Body() fields: any) {
+    return this.taskService.create(file, fields);
   }
+
   @Put(':id')
   @UseInterceptors(FileFieldsInterceptor([{ name: 'foto' }, { name: 'file' }]))
-  public async Updated(
+  public async update(
+    @Param('id') id: number,
     @UploadedFiles() file: any,
     @Body() fields: any,
-    @Param('id') id: number,
   ) {
-    try {
-      if (file) {
-        await this.RegRepo.update(id, {
-          regionName: fields.regionName,
-          regionPhoto: file.file ? file.file[0].originalname : null,
-          regionFile: file.foto ? file.foto[0].originalname : null,
-        });
-        return await this.RegRepo.findOne({ where: { regionId: id } });
-      }
-    } catch (error) {
-      return error.message;
-    }
+    return this.taskService.update(id, file, fields);
   }
+
   @Delete(':id')
-  public async Deleted(@Param('id') id: number) {
-    try {
-      const region = await this.RegRepo.delete(id);
-      return 'Delete' + region.affected + 'rows';
-    } catch (error) {
-      return error.message;
-    }
+  public async delete(@Param('id') id: number) {
+    return this.taskService.delete(id);
   }
 }
