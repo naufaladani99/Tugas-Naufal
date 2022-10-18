@@ -6,13 +6,14 @@ import CounterHook from './Counter/CounterHook';
 import Parent from './ParentChild/Parent';
 import EmployeeList from './List/EmployeeList';
 import ListEmployee from './Form/ListEmployee';
-
+import EmployeeRedux from './ReduxList/EmployeeRedux';
+import EmployeeReduxToolkit from './ReduxList/EmployeeReduxToolkit';
 
 
 function App() {
   return (
     <div>
-      <ListEmployee/>
+      <EmployeeReduxToolkit/>
     </div>
   );
 }
