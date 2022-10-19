@@ -8,12 +8,12 @@ import EmployeeList from './List/EmployeeList';
 import ListEmployee from './Form/ListEmployee';
 import EmployeeRedux from './ReduxList/EmployeeRedux';
 import EmployeeReduxToolkit from './ReduxList/EmployeeReduxToolkit';
-
+import RegionViewApi from './ViewApi/RegionViewApi';
 
 function App() {
   return (
     <div>
-      <EmployeeReduxToolkit/>
+      <RegionViewApi/>
     </div>
   );
 }
