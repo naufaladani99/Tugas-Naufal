@@ -17,5 +17,28 @@ const Delete = async(id)=>{
         return await error.message
     }
 }
-
-export default {list,Delete}
+const Create = async(payload)=>{
+    try {
+        const result = await axios.post(`${config.domain}/api/region/`,payload)
+        return result
+    } catch (error) {
+        return await error.message
+    }
+}
+const Update = async(data)=>{
+    try {
+        const result = await axios.put(`${config.domain}/api/region/${data.regionId}`,data)
+        return result
+    } catch (error) {
+        return await error.message
+    }
+}
+const FindOne = async(id)=>{
+    try {
+        const result = await axios.get(`${config.domain}/api/region/${id}`)
+        return result.data 
+    } catch (error) {
+        return await error.message
+    }
+}
+export default {list,Delete,Create,Update,FindOne}
