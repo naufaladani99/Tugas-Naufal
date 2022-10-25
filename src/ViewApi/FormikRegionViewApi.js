@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import RegionApi from '../api/RegionApi'
-import FormEditRegionApi from './FormEditRegionApi'
-import FormRegionApi from './FormRegionApi'
+import FormikAddRegionApi from './FormikAddRegionApi'
+import FormikEditRegionApi from './FormikEditRegionApi'
 
-export default function RegionViewApi() {
+export default function FormikRegionViewApi() {
   const [region, setRegion] = useState([])
   const [refresh, setRefresh] = useState(false)
   const [id, setId] = useState()
@@ -32,16 +32,18 @@ export default function RegionViewApi() {
     <div>
       {
         displayEdit ?
-          <FormEditRegionApi
+          <FormikEditRegionApi
             id={id}
-            setRefresh={setRefresh}
-            setDisplayEdit={setDisplayEdit}
+            setDisplay={setDisplayEdit}
+            closeAdd={() => setDisplayEdit(false)}
+            onRefresh={() => setRefresh(true)}
           />
           :
           display ?
-            <FormRegionApi
-              setRefresh={setRefresh}
-              setDisplay={setDisplay}
+            <FormikAddRegionApi
+            setDisplay={setDisplay}
+            closeAdd={() => setDisplay(false)}
+            onRefresh={() => setRefresh(true)}
             />
             :
             <>

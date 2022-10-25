@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import RegionApi from '../api/RegionApi'
-import FormEditRegionApi from './FormEditRegionApi'
-import FormRegionApi from './FormRegionApi'
+import { useDispatch,useSelector } from 'react-redux'
+import { GetRegionRequest,DelRegionRequest } from '../redux-saga/Action/RegionAction'
+import FormikAddRegionApi from './FormikAddRegionApi'
+import FormikEditRegionApi from './FormikEditRegionApi'
 
-export default function RegionViewApi() {
-  const [region, setRegion] = useState([])
+export default function FormikRegionViewApi() {
+  const dispatch = useDispatch()
   const [refresh, setRefresh] = useState(false)
   const [id, setId] = useState()
-
   const [display, setDisplay] = useState(false)
   const [displayEdit, setDisplayEdit] = useState(false)
-
+  const {regions} = useSelector(state=>state.regionStated)
   useEffect(() => {
-    RegionApi.list().then(data => {
-      setRegion(data)
-    })
-    setRefresh(false)
-  }, [refresh])
+    dispatch(GetRegionRequest())
+  }, [])
 
   const onDelete = async (id) => {
-    RegionApi.Delete(id).then(() => {
-      setRefresh(true)
-      window.alert('Data Successfully Delete')
-    })
+    dispatch(DelRegionRequest(id))
   }
   const onClick = (id) => {
     setDisplayEdit(true)
@@ -32,16 +26,18 @@ export default function RegionViewApi() {
     <div>
       {
         displayEdit ?
-          <FormEditRegionApi
+          <FormikEditRegionApi
             id={id}
-            setRefresh={setRefresh}
-            setDisplayEdit={setDisplayEdit}
+            setDisplay={setDisplayEdit}
+            closeAdd={() => setDisplayEdit(false)}
+            onRefresh={() => setRefresh(true)}
           />
           :
           display ?
-            <FormRegionApi
-              setRefresh={setRefresh}
-              setDisplay={setDisplay}
+            <FormikAddRegionApi
+            setDisplay={setDisplay}
+            closeAdd={() => setDisplay(false)}
+            onRefresh={() => setRefresh(true)}
             />
             :
             <>
@@ -50,13 +46,17 @@ export default function RegionViewApi() {
               <table>
                 <th>Region ID</th>
                 <th>Region Name</th>
+                <th>Region File</th>
+                <th>Region Foto</th>
                 <th>Action</th>
                 <tbody>
                   {
-                    region && region.map(reg => (
+                    regions && regions.map(reg => (
                       <tr key={reg.region_id}>
                         <td>{reg.regionId}</td>
                         <td>{reg.regionName}</td>
+                        <td>{reg.regionFile}</td>
+                        <td>{reg.regionPhoto}</td>
                         <td>
                           <button onClick={() => onDelete(reg.regionId)}>Delete Region</button>
                           <button onClick={() => onClick(reg.regionId)}>Edit Region</button>

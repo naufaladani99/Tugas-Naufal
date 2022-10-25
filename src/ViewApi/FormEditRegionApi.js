@@ -7,7 +7,6 @@ export default function FormEditRegionApi(props) {
         regionId: undefined,
         regionName: undefined
       })
-      
     useEffect(() => {
         RegionApi.FindOne(props.id).then(data => {
             setRegion(data)
@@ -41,7 +40,7 @@ export default function FormEditRegionApi(props) {
                 </div>
                 <div>
                     <button type='submit'>Simpan</button>
-                    <button onClick={() => props.setDisplay(false)}>Cancel</button>
+                    <button onClick={() => props.setDisplayEdit(false)}>Cancel</button>
                 </div>
 
             </form>
