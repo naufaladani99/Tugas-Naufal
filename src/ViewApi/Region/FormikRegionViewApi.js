@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import RegionApi from '../api/RegionApi'
+import RegionApi from '../../api/RegionApi'
 import FormikAddRegionApi from './FormikAddRegionApi'
 import FormikEditRegionApi from './FormikEditRegionApi'
 
@@ -50,13 +50,17 @@ export default function FormikRegionViewApi() {
               <h2>List Region</h2>
               <button onClick={() => setDisplay(true)}>Add Region</button>
               <table>
+                <thead>
+                  <tr>
                 <th>Region ID</th>
                 <th>Region Name</th>
                 <th>Action</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {
                     region && region.map(reg => (
-                      <tr key={reg.region_id}>
+                      <tr key={reg.regionId}>
                         <td>{reg.regionId}</td>
                         <td>{reg.regionName}</td>
                         <td>

@@ -1,28 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useFormik } from 'formik'
-import RegionApi from '../api/RegionApi'
+import RegionApi from '../../api/RegionApi'
 
-export default function FormikAddRegionApi(props) {
+export default function FormikEditRegionApi(props) {
+    const [region,setRegion]=useState([])
     const [previewImg,setPreviewImg] = useState()
     const [preViewFile,setPreviewFile] = useState()
     const [uploaded,setUploaded] = useState(false)
     const [uploadedFile,setUploadedFile] = useState(false)
+    useEffect(() => {
+        RegionApi.FindOne(props.id).then(data => {
+            setRegion(data)
+        })
+    }, [])
     const formik = useFormik({
+        enableReinitialize:true,
         initialValues:{
-            regionName:undefined,
-            file:undefined,
-            foto:undefined
+            regionId:props.id,
+            regionName:region.regionName,
+            file:region.regionFile,
+            foto:region.regionPhoto
         },
         onSubmit:async(values)=>{
             let payload = new FormData();
             payload.append('regionName',values.regionName)
             payload.append('file',values.file)
             payload.append('foto',values.foto)
+            payload.append('regionId',values.regionId)
 
-            await RegionApi.Create(payload)
+            await RegionApi.UpdateFile(payload)
             .then(()=>{
                 props.closeAdd();
-                window.alert('Data Successfully Insert')
+                window.alert('Data Successfully Updated')
                 props.onRefresh();
             })
         }

@@ -18,15 +18,15 @@ export default function FormikAddRegionApi(props) {
     const formik = useFormik({
         initialValues: {
             regionName: undefined,
-            file: undefined,
-            foto: undefined
+            foto: undefined,
+            file: undefined
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             let payload = new FormData();
             payload.append('regionName', values.regionName)
-            payload.append('file', values.file)
             payload.append('foto', values.foto)
+            payload.append('file', values.file)
 
             dispatch(AddRegionRequest(payload))
             props.closeAdd()
@@ -94,7 +94,7 @@ export default function FormikAddRegionApi(props) {
                                         </svg>
                                         :
                                         <>
-                                            <img crossOrigin='anonymous' src={previewImg} alt='image' />
+                                            <img crossOrigin='anonymous' src={previewImg} alt='' />
                                             <span class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" onClick={onClearImage}>Remove</span>
                                         </>
                                 }
@@ -127,7 +127,7 @@ export default function FormikAddRegionApi(props) {
                                         </svg>
                                         :
                                         <>
-                                            <img crossOrigin='anonymous' src={preViewFile} alt='image' />
+                                            <img crossOrigin='anonymous' src={preViewFile} alt='' />
                                             <span class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" onClick={onClearFile}>Remove</span>
                                         </>
                                 }

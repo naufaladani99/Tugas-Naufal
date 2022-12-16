@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import RegionApi from '../api/RegionApi'
+import RegionApi from '../../api/RegionApi'
 
 export default function FormEditRegionApi(props) {
     const [region, setRegion] = useState([])

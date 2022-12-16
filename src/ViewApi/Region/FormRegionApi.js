@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import RegionApi from '../api/RegionApi'
+import RegionApi from '../../api/RegionApi'
 
 export default function FormRegionApi(props) {
     const [values, setValues] = useState({

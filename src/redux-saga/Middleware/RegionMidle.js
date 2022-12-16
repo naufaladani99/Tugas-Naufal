@@ -29,7 +29,7 @@ function* handleDelRegion(action) {
     const { payload } = action
     try {
         const result = yield call(RegionApi.Delete, payload)
-        yield put(DelRegionSuccess(payload))
+        yield put(DelRegionSuccess(result))
     } catch (error) {
         yield put(DelRegionFailed(error))
     }
