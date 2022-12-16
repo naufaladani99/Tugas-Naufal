@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import helmet from 'helmet';
 
 async function bootstrap() {
-  const port = 3000;
+  const port = 3002;
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.use(helmet());

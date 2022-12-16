@@ -12,11 +12,38 @@ import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './Auth/local.strategy';
 import { JwtStrategy } from './Auth/jwt.strategy';
 import { UserController } from './Controller/usr.con';
-import { TasksService } from './Services/reg.srv';
+import { RegionService } from './Services/reg.service';
+import { CountryService } from './Services/coun.service';
+import { CounControll } from './Controller/coun.con';
+import { departmentService } from './Services/dep.service';
+import { DepControll } from './Controller/dep.con';
+import { Departments } from '../entities/Departments';
+import { empService } from './Services/emp.service';
+import { Employees } from '../entities/Employees';
+import { EmpControll } from './Controller/emp.con';
+import { jobHistoryService } from './Services/jobHis.service';
+import { jobHisControll } from './Controller/jobHis.con';
+import { JobHistory } from '../entities/JobHistory';
+import { Jobs } from '../entities/Jobs';
+import { jobService } from './Services/job.service';
+import { jobControll } from './Controller/job.con';
+import { Locations } from '../entities/Locations';
+import { locationService } from './Services/loc.service';
+import { locControll } from './Controller/loc.con';
+
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Regions, Countries, Users]),
+    TypeOrmModule.forFeature([
+      Regions,
+      Countries,
+      Departments,
+      Employees,
+      Users,
+      JobHistory,
+      Jobs,
+      Locations
+    ]),
     MulterModule.register(ConfigMulter.UploadFiles()),
     PassportModule,
     JwtModule.register({
@@ -24,8 +51,28 @@ import { TasksService } from './Services/reg.srv';
       signOptions: { expiresIn: '60d' },
     }),
   ],
-  providers: [UsersService, TasksService, LocalStrategy, JwtStrategy],
-  controllers: [RegControll, UserController],
+  providers: [
+    UsersService,
+    RegionService,
+    departmentService,
+    empService,
+    LocalStrategy,
+    JwtStrategy,
+    CountryService,
+    jobHistoryService,
+    jobService,
+    locationService
+  ],
+  controllers: [
+    RegControll,
+    CounControll,
+    DepControll,
+    EmpControll,
+    UserController,
+    jobHisControll,
+    jobControll,
+    locControll
+  ],
   exports: [UsersService],
 })
 export class ServerModule {}
